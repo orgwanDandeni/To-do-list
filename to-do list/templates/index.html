@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>To-Do List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>📋 قائمة المهام</h1>
+
+        <form action="/add" method="POST">
+            <input type="text" name="title" placeholder="أدخل مهمة جديدة" required>
+            <button type="submit">إضافة</button>
+        </form>
+
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <span class="{{ 'completed' if task['completed'] else '' }}">
+                        {{ task['title'] }}
+                    </span>
+                    <div class="actions">
+                        <a href="{{ url_for('complete', id=task['id']) }}" class="complete">✅</a>
+                        <a href="{{ url_for('delete', id=task['id']) }}">🗑️</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
